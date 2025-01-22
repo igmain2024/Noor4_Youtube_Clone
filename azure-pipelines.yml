@@ -1,0 +1,44 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: build
+    jobs:
+      - job: build
+        pool: 
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Npm@1
+            inputs:
+              command: 'install'
+          - task: Npm@1
+            inputs:
+              command: 'run build'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: 'build'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
+
+  - stage: deploy
+    jobs:
+      - job: deploy
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Azure subscription 1(9b537a96-3489-48af-80e5-e8e6e9063562)'
+              appType: 'webAppLinux'
+              WebAppName: 'youtubenoor4'
+              packageForLinux: 'build'
+              RuntimeStack: 'STATICSITE|1.0'

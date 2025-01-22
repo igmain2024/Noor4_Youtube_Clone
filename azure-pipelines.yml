@@ -8,7 +8,7 @@ trigger:
 
 pool:
   #vmImage: 'ubuntu-latest'
-  name: linuxdev
+  name: rg2lin
 stages:
   - stage: build
     jobs:
@@ -33,7 +33,7 @@ stages:
       - job: deploy
         pool:
           #vmImage: 'ubuntu-latest'
-          name: linuxdev
+          name: rg2lin
         steps:
           - task: AzureRmWebAppDeployment@4
             inputs:

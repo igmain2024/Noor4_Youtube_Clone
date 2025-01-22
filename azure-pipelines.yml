@@ -13,8 +13,9 @@ stages:
   - stage: build
     jobs:
       - job: build
-        pool: 
-          vmImage: 'ubuntu-latest'
+        #pool: 
+          #vmImage: 'ubuntu-latest'
+          #name: rg2name
         steps:
           - task: Npm@1
             inputs:
